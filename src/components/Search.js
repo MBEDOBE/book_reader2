@@ -2,7 +2,13 @@ import React from 'react'
 
 
 class Search extends React.Component{
-     
+     state={
+       query: ''
+     }
+
+     updateQuery = (query) => {
+      this.setState({ query: query.trim() })
+    }
     render(){
 
         return(
@@ -22,14 +28,17 @@ class Search extends React.Component{
                
                     <input type="text" 
                     placeholder="Search by title or author"
+                    value={this.state.query}
+                    onChange={(event) => this.updateQuery(event.target.value)}
                    />
           
               </div>
             </div>
             <div className="search-books-results">
               <ol className="books-grid">
-                {/* display search results here */}
+                {this.updateQuery}
               </ol>
+              
             </div>
           </div>
         )
