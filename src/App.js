@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
@@ -15,20 +16,25 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false,
     books: [],
-    query: ""
-    
-  }
+    query: "",
+  };
 
-  
+  /* search = (query) => {
+      BooksAPI.search(query.trim ())
+      .then(resp => {
+        this.setState({
+          searchBooks: resp
+        })
+      })
+    } */
+
+
   updateSearchPageState = (state) => {
-    this.setState({showSearchPage: state})
- 
-      
-  }
-  
+    this.setState({ showSearchPage: state });
+  };
 
-  componentDidMount(){
-    BooksAPI.getAll().then(resp => this.setState({books: resp}));
+  componentDidMount() {
+    BooksAPI.getAll().then((resp) => this.setState({ books: resp }));
   }
 
   /* changeBookShelf = (book, shelf) =>{
@@ -40,29 +46,34 @@ class BooksApp extends React.Component {
         })
       })
   }  */
-  
+
   changeBookShelf = (book, shelf) => {
-    const updateBooks = this.state.books.map(b => {
+    BooksAPI.update(book, shelf).then(() => {
+      book.shelf = shelf;
+      this.setState((state) => ({
+        books: state.books.filter((b) => b.id !== book.id).concat([book]),
+      }));
+    });
+    /* const updateBooks = this.state.books.map(b => {
       if (b.id === book.id) {
         b.shelf = shelf;
       }
       return b;
-    });
+    }); */
 
-    this.setState({
+    /* this.setState({
       books: updateBooks,
-    });
+    }); */
   };
 
 
-  
- 
-  
   render() {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <Search showSearchPage={this.updateSearchPageState}
+          <Search
+            showSearchPage={this.updateSearchPageState}
+            
           />
         ) : (
           <div className="list-books">
@@ -70,15 +81,16 @@ class BooksApp extends React.Component {
               <h1>MyReads</h1>
             </div>
 
-            <BookShelves allBooks={this.state.books} 
-            changeShelf={this.changeBookShelf}/>
-
-            <AddButton showSearchPage={this.updateSearchPageState}
+            <BookShelves
+              allBooks={this.state.books}
+              changeShelf={this.changeBookShelf}
             />
+
+            <AddButton showSearchPage={this.updateSearchPageState} />
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
