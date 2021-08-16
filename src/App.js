@@ -5,6 +5,7 @@ import './App.css'
 import BookShelves from './components/Shelves'
 import AddButton from './components/SearchButton'
 import Search from './components/Search'
+import { Route } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
@@ -47,9 +48,14 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         {this.state.showSearchPage ? (
-          <Search
+          <Route path="/search" render={()=> (
+            <Search
             showSearchPage={this.updateSearchPageState}
           />
+          )}
+            
+          />
+          
         ) : (
           <div className="list-books">
             <div className="list-books-title">
@@ -60,7 +66,7 @@ class BooksApp extends React.Component {
               allBooks={this.state.books}
               changeShelf={this.changeBookShelf}
             />
-
+          
             <AddButton showSearchPage={this.updateSearchPageState} />
           </div>
         )}
