@@ -19,14 +19,7 @@ class BooksApp extends React.Component {
     query: "",
   };
 
-  /* search = (query) => {
-      BooksAPI.search(query.trim ())
-      .then(resp => {
-        this.setState({
-          searchBooks: resp
-        })
-      })
-    } */
+ 
 
 
   updateSearchPageState = (state) => {
@@ -37,15 +30,7 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then((resp) => this.setState({ books: resp }));
   }
 
-  /* changeBookShelf = (book, shelf) =>{
-      console.log("Me", this)
-      this.setState({
-        books: this.state.books.map(b => {
-          b.id === book.id ? (b.shelf = shelf) : b
-          return b;
-        })
-      })
-  }  */
+  
 
   changeBookShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
@@ -54,16 +39,7 @@ class BooksApp extends React.Component {
         books: state.books.filter((b) => b.id !== book.id).concat([book]),
       }));
     });
-    /* const updateBooks = this.state.books.map(b => {
-      if (b.id === book.id) {
-        b.shelf = shelf;
-      }
-      return b;
-    }); */
-
-    /* this.setState({
-      books: updateBooks,
-    }); */
+   
   };
 
 
@@ -73,7 +49,6 @@ class BooksApp extends React.Component {
         {this.state.showSearchPage ? (
           <Search
             showSearchPage={this.updateSearchPageState}
-            
           />
         ) : (
           <div className="list-books">

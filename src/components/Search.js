@@ -10,20 +10,27 @@ class Search extends React.Component {
   getData = (query) => {
     if (query) {
       this.setState({ query });
-      BooksAPI.search(query).then((res) => this.setState({ books: res }));
-    } else {
+      BooksAPI.search(query).then((res) =>
+        this.setState({
+          books: res,
+        })
+      );
+    } else if (query === "") {
       this.setState({ books: [] });
     }
   };
 
-  bookShelf = (book, shelf) => {
+  /* this doesn't auto update on the homepage unless i refresh the page
+  i think it has to do with me not updating it in the home page...? */
+  changeBookShelf = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
       book.shelf = shelf;
       this.setState((state) => ({
         books: state.books.filter((b) => b.id !== book.id).concat([book]),
+        
       }));
     });
-  }
+  };
 
   render() {
     return (
@@ -37,14 +44,7 @@ class Search extends React.Component {
           </button>
 
           <div className="search-books-input-wrapper">
-            {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
+            
             <input
               type="text"
               placeholder="Search by title or author"
@@ -70,7 +70,7 @@ class Search extends React.Component {
                       <select
                         value={book.shelf}
                         onChange={(e) =>
-                          this.bookShelf(book, e.target.value)
+                          this.changeBookShelf(book, e.target.value)
                         }
                       >
                         <option value="move" disabled>
