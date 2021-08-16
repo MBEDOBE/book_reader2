@@ -6,11 +6,13 @@ class BookShelves extends React.Component{
     
     render(){
         const allBooks = this.props.allBooks;
+        
         const currentlyReading = allBooks.filter(
             book => book.shelf === "currentlyReading"
         );
         const wantToRead = allBooks.filter(book => book.shelf === "wantToRead");
         const read = allBooks.filter(book => book.shelf === "read");
+        
 
         return(
             <div className="list-books-content">

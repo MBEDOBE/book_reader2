@@ -8,14 +8,14 @@ import { Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   state = {
-    showSearchPage: false,
+    //showSearchPage: false,
     books: [],
     query: "",
   };
 
-  updateSearchPageState = (state) => {
+  /* updateSearchPageState = (state) => {
     this.setState({ showSearchPage: state });
-  };
+  };  */
 
   componentDidMount() {
     BooksAPI.getAll().then((resp) => this.setState({ books: resp }));
@@ -25,35 +25,49 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, shelf).then(() => {
       book.shelf = shelf;
       this.setState((state) => ({
-        books: state.books.filter((b) => b.id !== book.id).concat([book]),
+        books: state.books
+          .filter((b) => b.id !== book.id)
+          .concat({ book}),
       }));
     });
   };
 
+  
+
   render() {
+    
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <Route
-            path="/search"
-            render={() => (
-              <Search showSearchPage={this.updateSearchPageState} />
-            )}
-          />
-        ) : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <div className="list-books">
+              <div className="list-books-title">
+                <h1>MyReads</h1>
+              </div>
+
+              <BookShelves
+                allBooks={this.state.books}
+                changeShelf={this.changeBookShelf}
+                
+              />
+
+              <AddButton />
             </div>
+          )}
+        />
 
-            <BookShelves
-              allBooks={this.state.books}
+        <Route
+          path="/search"
+          render={() => (
+            <Search
+              bsBooks={this.state.book}
               changeShelf={this.changeBookShelf}
+              
             />
-
-            <AddButton showSearchPage={this.updateSearchPageState} />
-          </div>
-        )}
+          )}
+        />
       </div>
     );
   }

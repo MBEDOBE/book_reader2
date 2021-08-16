@@ -8,39 +8,45 @@ class Search extends React.Component {
     query: "",
   };
 
-  getData = (query) => {
-    if (query) {
-      this.setState({ query });
-      BooksAPI.search(query).then((res) =>
-        this.setState({
-          books: res,
-        })
-      );
-    } else if (query === "") {
-      this.setState({ books: [] });
-    }
-  };
+ 
 
-  /* this doesn't auto update on the homepage unless i refresh the page
-  i think it has to do with me not updating it in the home page...? */
-  changeBookShelf = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(() => {
-      book.shelf = shelf;
-      this.setState((state) => ({
-        books: state.books.filter((b) => b.id !== book.id).concat([book]),
-      }));
+  getData = (query) => {
+    this.setState((prevState) => ({ ...prevState, query }));
+    BooksAPI.search(query).then((res) => {
+      //console.log("results", res);
+      if (typeof res !== "undefined" && res.error !== "empty query") {
+        this.setState(() => ({
+          
+          books: res,
+        }));
+      } else {
+        this.setState(() => ({
+          books: [],
+        }));
+      }
+      
+    });
+  }; 
+
+
+  
+
+  clearSearch = () => {
+    this.setState({
+      query: "",
+      books: [],
     });
   };
 
+  
+ 
+
   render() {
+    
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <Link
-            to="/"
-            className="close-search"
-            onClick={() => this.props.showSearchPage(false)}
-          >
+          <Link to="/" className="close-search" onClick={this.clearSearch}>
             Close
           </Link>
 
@@ -48,6 +54,7 @@ class Search extends React.Component {
             <input
               type="text"
               placeholder="Search by title or author"
+              value={this.state.query }
               onChange={(e) => this.getData(e.target.value)}
             />
           </div>
@@ -55,7 +62,7 @@ class Search extends React.Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {this.state.books.map((book) => (
-              <li key={book.id}>
+              <li key={book.id} >
                 <div className="book">
                   <div className="book-top">
                     <div
@@ -70,7 +77,7 @@ class Search extends React.Component {
                       <select
                         value={book.shelf}
                         onChange={(e) =>
-                          this.changeBookShelf(book, e.target.value)
+                          this.props.changeShelf(book, e.target.value)
                         }
                       >
                         <option value="move" disabled>

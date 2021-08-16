@@ -9,7 +9,7 @@ class AddButton extends React.Component {
           exact
           path="/"
           render={() => (
-            <Link to="/search" onClick={() => this.props.showSearchPage(true)}>
+            <Link to="/search">
               Add a book
             </Link>
           )}

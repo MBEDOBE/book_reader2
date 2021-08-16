@@ -5,9 +5,11 @@ class Shelf extends React.Component {
     books: [],
   };
 
+  
+
   render() {
     const shelfBooks = this.props.books;
-
+    
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{this.props.title}</h2>
@@ -44,8 +46,8 @@ class Shelf extends React.Component {
                       </select>
                     </div>
                   </div>
-                  <div className="book-title">{book.title}</div>
-                  <div className="book-authors">{book.authors}</div>
+                  <div className="book-title">{book.title ? book.title : 'no title provided'}</div>
+                  <div className="book-authors">{book.authors ? book.authors : 'no author provided'}</div>
                 </div>
               </li>
             ))}
