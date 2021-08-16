@@ -28,7 +28,6 @@ class Search extends React.Component {
       book.shelf = shelf;
       this.setState((state) => ({
         books: state.books.filter((b) => b.id !== book.id).concat([book]),
-        
       }));
     });
   };
@@ -38,13 +37,14 @@ class Search extends React.Component {
       <div className="search-books">
         <div className="search-books-bar">
           <Link
-          to="/"
+            to="/"
             className="close-search"
             onClick={() => this.props.showSearchPage(false)}
-            >Close</Link>
+          >
+            Close
+          </Link>
 
           <div className="search-books-input-wrapper">
-            
             <input
               type="text"
               placeholder="Search by title or author"
