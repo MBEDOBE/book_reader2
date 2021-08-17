@@ -42,7 +42,11 @@ class Search extends React.Component {
  
 
   render() {
-    
+    const { myBooks, changeShelf } = this.props;
+    const { query } = this.state;
+    const getBookShelf = (book) => {
+      return myBooks?.find((item) => item.id === book.id)?.shelf ?? "none";
+    };
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -61,7 +65,9 @@ class Search extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.books.map((book) => (
+            {query && this.state.books.map((book) => {
+              let bookShelf = getBookShelf(book);
+              return(
               <li key={book.id} >
                 <div className="book">
                   <div className="book-top">
@@ -75,7 +81,7 @@ class Search extends React.Component {
                     />
                     <div className="book-shelf-changer">
                       <select
-                        value={book.shelf}
+                        value={book.shelf || bookShelf}
                         onChange={(e) =>
                           this.props.changeShelf(book, e.target.value)
                         }
@@ -96,7 +102,8 @@ class Search extends React.Component {
                   <div className="book-authors">{book.authors}</div>
                 </div>
               </li>
-            ))}
+              )
+})}
           </ol>
         </div>
       </div>

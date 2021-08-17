@@ -18,7 +18,7 @@ class BooksApp extends React.Component {
   };  */
 
   componentDidMount() {
-    BooksAPI.getAll().then((resp) => this.setState({ books: resp }));
+    BooksAPI.getAll().then((myBooks) => this.setState({ books: myBooks }));
   }
 
   changeBookShelf = (book, shelf) => {
@@ -31,6 +31,8 @@ class BooksApp extends React.Component {
       }));
     });
   };
+
+  
 
   
 
@@ -62,7 +64,7 @@ class BooksApp extends React.Component {
           path="/search"
           render={() => (
             <Search
-              bsBooks={this.state.book}
+              myBooks={this.state.books}
               changeShelf={this.changeBookShelf}
               
             />
