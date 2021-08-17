@@ -11,6 +11,7 @@ class BookShelves extends React.Component {
     const wantToRead = allBooks.filter((book) => book.shelf === "wantToRead");
     const read = allBooks.filter((book) => book.shelf === "read");
 
+    //TODO: refactor code to have a constant that stores a list of shelves
     return (
       <div className="list-books-content">
         <div>

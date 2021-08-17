@@ -1,10 +1,6 @@
 import React from "react";
 
 class Shelf extends React.Component {
-  state = {
-    books: [],
-  };
-
   render() {
     const shelfBooks = this.props.books;
 
@@ -52,7 +48,9 @@ class Shelf extends React.Component {
                     {book.title ? book.title : "no title provided"}
                   </div>
                   <div className="book-authors">
-                    {book.authors ? book.authors : "no author provided"}
+                    {book.authors
+                      ? book.authors.join(", ")
+                      : "no author provided"}
                   </div>
                 </div>
               </li>

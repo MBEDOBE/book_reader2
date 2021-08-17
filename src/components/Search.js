@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { debounce } from "throttle-debounce";
 import * as BooksAPI from "../BooksAPI";
 
 class Search extends React.Component {
@@ -8,7 +9,7 @@ class Search extends React.Component {
     query: "",
   };
 
-  getData = (query) => {
+  getData = debounce(300, false, (query) => {
     this.setState((prevState) => ({ ...prevState, query }));
     BooksAPI.search(query).then((res) => {
       //console.log("results", res);
@@ -22,7 +23,7 @@ class Search extends React.Component {
         }));
       }
     });
-  };
+  });
 
   clearSearch = () => {
     this.setState({
@@ -67,7 +68,9 @@ class Search extends React.Component {
                           style={{
                             width: 128,
                             height: 193,
-                            backgroundImage: `url(${book.imageLinks.thumbnail})`,
+                            backgroundImage: `url(${
+                              book.imageLinks && book.imageLinks.thumbnail
+                            })`,
                           }}
                         />
                         <div className="book-shelf-changer">
@@ -90,7 +93,9 @@ class Search extends React.Component {
                         </div>
                       </div>
                       <div className="book-title">{book.title}</div>
-                      <div className="book-authors">{book.authors}</div>
+                      <div className="book-authors">
+                        {book.authors && book.authors.join(", ")}
+                      </div>
                     </div>
                   </li>
                 );

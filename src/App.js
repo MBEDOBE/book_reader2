@@ -8,14 +8,9 @@ import { Route } from "react-router-dom";
 
 class BooksApp extends React.Component {
   state = {
-    //showSearchPage: false,
     books: [],
     query: "",
   };
-
-  /* updateSearchPageState = (state) => {
-    this.setState({ showSearchPage: state });
-  };  */
 
   componentDidMount() {
     BooksAPI.getAll().then((myBooks) => this.setState({ books: myBooks }));
@@ -25,7 +20,7 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, shelf).then(() => {
       book.shelf = shelf;
       this.setState((state) => ({
-        books: state.books.filter((b) => b.id !== book.id).concat({ book }),
+        books: state.books.filter((b) => b.id !== book.id).concat(book),
       }));
     });
   };
