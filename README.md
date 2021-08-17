@@ -28,18 +28,18 @@ To simplify the development process, we were provided a backend server for us to
     update
     search
 
-getAll
+# getAll
 
-Method Signature:
+# Method Signature:
 
 getAll();
 
     Returns a Promise which resolves to a JSON object containing a collection of book objects.
     This collection represents the books currently in the bookshelves in your app.
 
-update
+# update
 
-Method Signature:
+# Method Signature:
 
 update(book, shelf);
 
@@ -47,9 +47,9 @@ update(book, shelf);
     shelf: <String> contains one of ["wantToRead", "currentlyReading", "read"]
     Returns a Promise which resolves to a JSON object containing the response data of the POST request
 
-search
+# search
 
-Method Signature:
+# Method Signature:
 
 search(query, maxResults);
 
@@ -58,7 +58,13 @@ search(query, maxResults);
     Returns a Promise which resolves to a JSON object containing a collection of book objects.
     These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
 
-Important
+## Important
 
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in SEARCH_TERMS.md. That list of terms are the only terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results
+
+## Project Status
+This project was done 
+## License
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 ```
+
